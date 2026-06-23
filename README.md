@@ -26,4 +26,4 @@ npm install
 ng serve
 
 ## Auteur
-TON_NOM
+Pierre Parent
