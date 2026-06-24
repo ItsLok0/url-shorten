@@ -8,6 +8,9 @@ app.use(express.json());
 const linkRoutes = require('./routes/link.routes');
 app.use('/links', linkRoutes);
 
+const { redirectLink } = require('./controllers/link.controller')
+app.get('/:slug', redirectLink)
+
 app.get('/', (req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Hello World!\n');
