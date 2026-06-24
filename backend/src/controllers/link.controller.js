@@ -2,7 +2,6 @@ const { nanoid } = require('nanoid');
 const prisma = require('../lib/prisma');
 
 const createLink = async (req, res) => {
-    console.log('body:', req.body);
     const { originalUrl } = req.body;
 
     if (!originalUrl) {
@@ -23,9 +22,38 @@ const createLink = async (req, res) => {
             originalUrl: link.originalUrl,
         })
     } catch (error) {
-        console.error(error);
         res.status(500).json({ error: 'Internal server error' });
     }
 }
 
-module.exports = { createLink };
+const redirectLink = async (req, res) => {
+    const { slug } = req.params
+
+    console.log(req.params)
+
+    try {
+        const link = await prisma.link.findUnique({
+            where: { slug }
+        })
+
+        if (!link) {
+            return res.status(404).json({ error: 'Link not found' })
+        }
+
+        // Enregistre le clic avant de rediriger
+        await prisma.click.create({
+            data: {
+                linkId: link.id,
+                ip: req.ip,
+                userAgent: req.headers['user-agent'] ?? null,
+            }
+        })
+        
+        // 301 = redirection permanente
+        res.redirect(301, link.originalUrl)
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' })
+    }
+}
+
+module.exports = { createLink, redirectLink }
