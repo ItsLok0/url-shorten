@@ -13,6 +13,7 @@ app.use(express.json())
 app.use('/links', linkRoutes)
 app.use('/auth', authRoutes)
 
+// Toujours après les routes (redirect)
 app.get('/:slug', redirectLink)
 
 app.get('/', (req, res) => {

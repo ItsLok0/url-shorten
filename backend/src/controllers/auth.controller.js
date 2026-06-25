@@ -4,16 +4,14 @@ const { z } = require('zod')
 const prisma = require('../lib/prisma')
 
 // Schéma de valiation (avant ajout en BDD)  
-const registerSchema = z.object({
+const authSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8)
 })
 
 const register = async (req, res, next) => {
-    console.log('JWT_SECRET:', process.env.JWT_SECRET)
-
     // Validation données
-    const result = registerSchema.safeParse(req.body)
+    const result = authSchema.safeParse(req.body)
     if (!result.success) {
         return res.status(400).json({ error: result.error.errors })
     }
@@ -38,7 +36,7 @@ const register = async (req, res, next) => {
         // Création du compte
         const user = await prisma.user.create({
             data: {
-                email: email,
+                email,
                 password: hashedPassword
             }
         })
@@ -50,12 +48,45 @@ const register = async (req, res, next) => {
             { expiresIn: '7d' }
         )
 
-        console.log('token:', token)
-
         res.status(201).json({token})        
     } catch (error) {
         next(error)
     }
 }
 
-module.exports = { register }
+const login = async (req, res, next) => {
+    // Validation données
+    const result = authSchema.safeParse(req.body)
+    if (!result.success) {
+        return res.status(400).json({ error: result.error.errors })
+    }
+
+    const { email, password } = result.data
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email }
+        })
+        if(!user) {
+            return res.status(401).json({ error: 'Invalid credentials' })
+        }
+
+        const verifyPassword = await bcrypt.compare(password, user.password)
+        if (!verifyPassword) {
+            return res.status(401).json({ error: 'Invalid credentials' })
+        }
+
+         // Création du token
+        const token = jwt.sign(
+            { userId: user.id },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        )
+
+        res.status(200).json({token})    
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = { register, login }
