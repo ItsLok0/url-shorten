@@ -11,7 +11,7 @@ const createLink = async (req, res, next) => {
     try {
         const link = await prisma.link.create({
             data: {
-                slug: nanoid(8),      // génère un slug unique de 8 caractères
+                slug: nanoid(8),
                 originalUrl,
             }
         })
@@ -28,8 +28,6 @@ const createLink = async (req, res, next) => {
 
 const redirectLink = async (req, res, next) => {
     const { slug } = req.params
-
-    console.log(req.params)
 
     try {
         const link = await prisma.link.findUnique({
