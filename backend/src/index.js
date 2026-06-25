@@ -1,14 +1,17 @@
-const express = require('express');
-const app = express();
-const linkRoutes = require('./routes/link.routes');
+const express = require('express')
+const app = express()
+const linkRoutes = require('./routes/link.routes')
+const authRoutes = require('./routes/auth.routes')
 const errorHandler = require('./middlewares/errorHandler')
 const { redirectLink } = require('./controllers/link.controller')
 
+
 // Parse le JSON des requêtes entrantes
-app.use(express.json());
+app.use(express.json())
 
 // Routes
-app.use('/links', linkRoutes);
+app.use('/links', linkRoutes)
+app.use('/auth', authRoutes)
 
 app.get('/:slug', redirectLink)
 
