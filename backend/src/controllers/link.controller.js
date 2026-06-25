@@ -1,7 +1,7 @@
 const { nanoid } = require('nanoid');
 const prisma = require('../lib/prisma');
 
-const createLink = async (req, res) => {
+const createLink = async (req, res, next) => {
     const { originalUrl } = req.body;
 
     if (!originalUrl) {
@@ -22,11 +22,11 @@ const createLink = async (req, res) => {
             originalUrl: link.originalUrl,
         })
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        next(error)
     }
 }
 
-const redirectLink = async (req, res) => {
+const redirectLink = async (req, res, next) => {
     const { slug } = req.params
 
     console.log(req.params)
@@ -52,7 +52,7 @@ const redirectLink = async (req, res) => {
         // 301 = redirection permanente
         res.redirect(301, link.originalUrl)
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' })
+        next(error)
     }
 }
 
