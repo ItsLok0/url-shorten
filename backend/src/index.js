@@ -1,14 +1,15 @@
 const express = require('express');
 const app = express();
+const linkRoutes = require('./routes/link.routes');
+const errorHandler = require('./middlewares/errorHandler')
+const { redirectLink } = require('./controllers/link.controller')
 
 // Parse le JSON des requêtes entrantes
 app.use(express.json());
 
 // Routes
-const linkRoutes = require('./routes/link.routes');
 app.use('/links', linkRoutes);
 
-const { redirectLink } = require('./controllers/link.controller')
 app.get('/:slug', redirectLink)
 
 app.get('/', (req, res) => {
@@ -18,3 +19,8 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+/** 
+ * * Toujours en dernier (gestion des erreurs)
+*/
+app.use(errorHandler)
