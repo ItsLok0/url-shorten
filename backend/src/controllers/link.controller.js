@@ -13,6 +13,7 @@ const createLink = async (req, res, next) => {
             data: {
                 slug: nanoid(8),
                 originalUrl,
+                userId: req.user.userId
             }
         })
         
