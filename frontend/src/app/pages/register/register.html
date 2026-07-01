@@ -1,1 +1,15 @@
-<p>register works!</p>
+<div>
+    <h1>Register</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>Tous les champs sont requis.</p>
+        <label for="email">Email</label>
+        <input formControlName="email" type="email" id="email" placeholder="Email" />
+        <label for="password">Password</label>
+        <input formControlName="password" type="password" id="password" placeholder="Password" />
+        <button type="submit" [disabled]="form.invalid">S'inscrire</button>
+    </form>
+
+    <p *ngIf="error">{{ error }}</p>
+    <a routerLink="/login">Déjà un compte ?</a>
+</div>

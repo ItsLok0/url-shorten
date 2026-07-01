@@ -8,8 +8,8 @@ import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: 'login', loadComponent: () => import('./pages/login/login').then(m => m.Login) },
-    { path: 'register', loadComponent: () => import('./pages/register/register').then(m => m.Register) },
+    { path: 'login', loadComponent: () => import('./pages/login/login').then(m => m.LoginComponent) },
+    { path: 'register', loadComponent: () => import('./pages/register/register').then(m => m.RegisterComponent) },
     { path: 'dashboard', loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard), canActivate: [authGuard] },
     { path: 'stats/:id', loadComponent: () => import('./pages/stats/stats').then(m => m.Stats), canActivate: [authGuard] },
     { path: '**', redirectTo: 'login' }
