@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
-export class Auth {
+export class AuthService {
   private apiUrl = 'http://localhost:3000/auth';
   // Clé utilisée pour stocker le token dans localStorage
   private tokenKey = 'token';
