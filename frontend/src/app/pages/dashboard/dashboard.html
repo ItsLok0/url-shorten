@@ -1,1 +1,25 @@
-<p>dashboard works!</p>
+<div>
+    <h1>Dashboard</h1>
+
+    <!-- Formulaire création de lien -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <label for="originalUrl">URL à raccourcir</label>
+        <input formControlName="originalUrl" type="url" id="originalUrl" placeholder="https://exemple.com" />
+        <button type="submit" [disabled]="form.invalid">Raccourcir</button>
+    </form>
+
+    <!-- Liste des liens -->
+    <div *ngFor="let link of links$ | async">
+        <p>{{ link.shortUrl }}</p>
+        <p>{{ link.originalUrl }}</p>
+        <p>{{ link.clicks }} clics</p>
+        <button (click)="copyLink(link.shortUrl, link.slug)">
+            {{ copied === link.slug ? 'Copié !' : 'Copier' }}
+        </button>
+        <a [routerLink]="['/stats', link.id]">Voir stats</a>
+    </div>
+
+    <p *ngIf="(links$ | async)?.length === 0">Aucun lien pour l'instant.</p>
+
+    <button (click)="authService.logout()">Déconnexion</button>
+</div>

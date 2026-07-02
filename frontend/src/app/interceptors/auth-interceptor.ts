@@ -1,9 +1,9 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Auth } from '../services/auth';
+import { AuthService } from '../services/auth';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(Auth);
+  const authService = inject(AuthService);
   const token = authService.getToken();
 
   // Si pas de token, on laisse passer la requête telle quelle
