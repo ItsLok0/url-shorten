@@ -10,6 +10,14 @@ export interface Link {
   createdAt: string;
 }
 
+export interface Stats {
+  id: string;
+  slug: string;
+  originalUrl: string;
+  totalClicks: number;
+  clicksByDay: { [date: string]: number };
+}
+
 @Injectable({ providedIn: 'root' })
 export class LinkService {
   private apiUrl = 'http://localhost:3000/links';
@@ -23,5 +31,9 @@ export class LinkService {
 
   createLink(originalUrl: string) {
     return this.http.post<Link>(this.apiUrl, { originalUrl });
+  }
+
+  getStats(id: string) {
+    return this.http.get<Stats>(`${this.apiUrl}/${id}/stats?t=${Date.now()}`);
   }
 }
