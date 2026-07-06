@@ -5,6 +5,11 @@ const app = express()
 // Parse le JSON des requêtes entrantes
 app.use(express.json())
 
+const cors = require('cors')
+app.use(cors({
+    origin: 'http://localhost:4200'
+}))
+
 const linkRoutes = require('./routes/link.routes')
 const authRoutes = require('./routes/auth.routes')
 // Routes
