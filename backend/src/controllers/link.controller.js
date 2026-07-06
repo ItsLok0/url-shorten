@@ -48,8 +48,8 @@ const redirectLink = async (req, res, next) => {
             }
         })
         
-        // 301 = redirection permanente
-        res.redirect(301, link.originalUrl)
+        // 302 = redirection temporaire
+        res.redirect(302, link.originalUrl)
     } catch (error) {
         next(error)
     }
