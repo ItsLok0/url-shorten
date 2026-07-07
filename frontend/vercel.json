@@ -1,0 +1,4 @@
+{
+    "buildCommand": "npm install -g @angular/cli && ng build",
+    "outputDirectory": "dist/frontend/browser"
+}
