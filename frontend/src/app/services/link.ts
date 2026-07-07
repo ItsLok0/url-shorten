@@ -20,7 +20,7 @@ export interface Stats {
 
 @Injectable({ providedIn: 'root' })
 export class LinkService {
-  private apiUrl = 'http://localhost:3000/links';
+  private apiUrl = 'https://backend-restless-violet-6133.fly.dev/links';
 
   constructor(private http: HttpClient) {}
 
