@@ -1,0 +1,15 @@
+<div>
+    <h1>Login</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>Tous les champs sont requis.</p>
+        <label for="email">Email</label>
+        <input formControlName="email" type="email" id="email" placeholder="Email" />
+        <label for="password">Password</label>
+        <input formControlName="password" type="password" id="password" placeholder="Password" />
+        <button type="submit" [disabled]="form.invalid">Se connecter</button>
+    </form>
+
+    <p *ngIf="error">{{ error }}</p>
+    <a routerLink="/register">Pas encore de compte ?</a>
+</div>

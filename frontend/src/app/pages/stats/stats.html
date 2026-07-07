@@ -1,0 +1,12 @@
+<div *ngIf="stats">
+    <a routerLink="/dashboard">← Retour</a>
+    <h1>Stats — {{ stats.slug }}</h1>
+    <p>URL originale : {{ stats.originalUrl }}</p>
+    <p>Total clics : {{ stats.totalClicks }}</p>
+
+    <h2>Clics par jour</h2>
+    <div *ngIf="clicksByDayEntries.length === 0">Aucun clic pour l'instant.</div>
+    <canvas #myChart [style.display]="clicksByDayEntries.length > 0 ? 'block' : 'none'"></canvas>
+</div>
+
+<div *ngIf="!stats">Chargement...</div>
