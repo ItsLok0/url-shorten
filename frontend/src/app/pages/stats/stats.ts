@@ -35,7 +35,6 @@ export class StatsComponent implements OnInit {
           .map(([date, count]) => ({ date, count }));
         this.cdr.detectChanges();
         setTimeout(() => {
-          console.log('createChart appelé', this.chartRef)
           this.createChart();
         }, 100);
       },
@@ -45,7 +44,6 @@ export class StatsComponent implements OnInit {
 
   createChart() {
     if (!this.chartRef) {
-      console.error('chartRef undefined')
       return;
     }
 
