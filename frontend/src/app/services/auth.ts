@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth';
+  private apiUrl = 'https://backend-restless-violet-6133.fly.dev/auth';
   // Clé utilisée pour stocker le token dans localStorage
   private tokenKey = 'token';
 
